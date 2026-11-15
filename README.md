@@ -1,27 +1,30 @@
-# hospital_readmission_risk_analysis
+# Hospital Readmission Risk Analysis
 
-Business Problem:
-Hospitals face financial penalties when patients are readmitted within 30 days of leaving the hospital. This project looks at 10 years of data from 130 U.S. hospitals to find which patients, diagnoses, and care patterns are linked to a higher risk of readmission. The goal is to help care teams identify high-risk patients, focus follow-up resources, and prevent avoidable readmissions.
+## 📌 Business Problem
+Hospitals face severe financial penalties when patients are readmitted within 30 days of discharge. This project analyzes 10 years of clinical encounter data from 130 U.S. hospitals to identify specific patient cohorts, primary diagnoses, and care patterns linked to a heightened risk of 30-day readmission. The objective is to provide care teams with data-driven insights to pinpoint high-risk patients, optimize resource allocation for follow-up care, and prevent avoidable readmissions.
 
-Data & Tools:
-Dataset: Diabetes 130-US Hospitals for Years 1999-2008 (UCI Machine Learning Repository, CC BY 4.0). ~100,000 patient encounters across 130 hospitals, 1999-2008
-Database: MySQL Workbench
-Techniques Used: CTEs, Window Functions (RANK, NTILE), CASE-based risk tiering, correlated subqueries, and multi-table joins
+---
 
-Approach/Methodology
-1.Exploratory analysis: Established baseline readmission rates by age, admission type, and diagnosis category.
-2.Advanced analysis: Built a reusable high-risk patient group with a CTE, applied window function to rank patients by risk, grouped them by medication use and number of diagnoses, and found diagnosis categories with above average readmission rates.
-3.Findings: Summarized the results into four key findings that connect back to the main business problem.
+## 📊 Data & Tools
+* **Dataset:** Diabetes 130-US Hospitals for Years 1999–2008 (sourced from the UCI Machine Learning Repository, CC BY 4.0). Includes $\approx 100,000$ patient encounters across 130 hospitals.
+* **Database Management System:** MySQL Workbench
+* **Analytical Techniques:** Common Table Expressions (CTEs), Window Functions (`RANK`, `NTILE`), `CASE`-based risk tiering, correlated subqueries, and multi-table joins.
 
-Key SQL Techniques Used
-1.CTEs to stage a clean, reusable risk cohort across multiple queries
-Window functions: RANK() OVER (PARTITION BY) to rank medication burden within age groups, NTILE(4) to build risk quartiles
-2..CASE-based tiering to convert continuous variables into business-readable risk categories
-3.Correlated subqueries with HAVING to isolate diagnosis categories performing above the population-wide average
-4.Multi-table joins against ID-mapping reference tables to convert numeric codes into readable labels
+---
 
-Findings
-1.Circulatory and diabetes diagnoses had the highest readmission rates among all diagnosis categories, and both exceeded the average readmission rate.
-2.Patients with more prior inpatient visits in the prior year showed a substantially elevated readmission risk, supporting prior-utilization as a strong predictive signal.
-3.Discharge disposition mattered significantly. Patients discharged to certain facility types showed measurably different readmission rates than those discharged home.
-4.Findings around medication changes at discharge and A1C testing during the stay both align with the original clinical research question this dataset was collected to investigate.
+## 🛠️ Approach & Methodology
+1. **Exploratory Analysis:** Established baseline readmission rates across demographic and clinical features, including age brackets, admission types, and primary diagnosis categories.
+2. **Advanced Analysis:** Staged a clean, reusable high-risk patient group using CTEs, applied window functions to rank patients by clinical risk tiers, evaluated medication burden patterns alongside total diagnosis counts, and isolated specific diagnosis categories operating above the population-wide average readmission rate.
+3. **Findings & Translation:** Synthesized query outputs into actionable clinical insights addressing the core business problem.
+
+---
+
+## ⚙️ Key SQL Techniques & Features
+* **CTEs (Common Table Expressions):** Used to modularize workflows and stage clean, reusable patient risk cohorts across complex multi-step queries.
+* **Window Functions:** 
+  * `RANK() OVER (PARTITION BY ...)` to evaluate and rank medication burden within structured age groups.
+  * `NTILE(4)` to segment patient records into distinct clinical risk quartiles.
+* **`CASE`-Based Tiering:** Converted continuous numerical variables (such as total lab procedures and medication changes) into business-readable risk categories.
+* **Correlated Subqueries:** Leveraged subqueries paired with `HAVING` clauses to filter diagnosis categories performing above the population-wide average threshold.
+* **Multi-Table Joins:** Integrated ID-mapping reference tables to convert numeric diagnostic codes into descriptive, human-readable labels.
+
